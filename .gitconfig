@@ -1,0 +1,7 @@
+[user]
+	name = reallocmb
+	email = realloc.mb@gmail.com
+[credential]
+	helper = store
+[core]
+	editor = nvim
