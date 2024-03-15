@@ -195,16 +195,36 @@ vim.g.vimtex_compiler_method = 'pdflatex'
 -- following line. The default is usually fine and is the symbol "\".
 vim.g.maplocalleader = ","
 
-require'minimaline'.setup {
-    -- Disable minimaline in the following filetypes (default is empty table)
-    disabled_filetypes = { "NvimTree*" },
+require("yasl").setup({
+    -- See :h laststatus
+    laststatus = 3,
 
-    -- Enable or disable colors on LSP diagnostics (default is false)
-    lsp_colors_enabled = true,
+    -- true if nvim-web-devicons is installed, otherwise false
+    enable_icons = true, 
 
-    -- Set minimaline colors
-    -- Use 256 Xterm colors
-    -- foreground is "fg", background is "bg" and additionally "gui" could contain "bold", "italic" or combination "bold,italic"
-    -- Set only one option is possible (only fg or only bg, etc)
-    style = { fg = 15, bg = 0 }
-}
+    --[[
+    Accepts provided component name (or)
+    any string vim can use for statusline value. See :h statusline
+
+    Default layout:
+    +----------------------------------------------------------------------------+
+    | mode | name branch diff |             | diagnostics | ft location progress |
+    +----------------------------------------------------------------------------+
+    ]]--
+    components = {
+        "mode",
+        " ",
+        "%<%t%h%m%r%w", -- filename
+        " ",
+        "branch",
+        " ",
+        "gitdiff",
+        "%=",
+        "diagnostics",
+        " ",
+        "filetype",
+        " ",
+        "[%-8.(%l, %c%V%) %P]", -- location, and progress
+        " ",
+    }
+})

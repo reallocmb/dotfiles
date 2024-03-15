@@ -97,10 +97,5 @@ return require('packer').startup(function(use)
     use('rcarriga/nvim-dap-ui')
 
     -- statusline
-    use {
-    'javiorfo/nvim-minimaline',
-
-    -- Optional (only if you want file icons in the statusline)
-    requires = 'nvim-tree/nvim-web-devicons'
-}
+    use('brianaung/yasl.nvim')
 end)
