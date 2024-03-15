@@ -98,7 +98,9 @@ return require('packer').startup(function(use)
 
     -- statusline
     use {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-    }
+    'javiorfo/nvim-minimaline',
+
+    -- Optional (only if you want file icons in the statusline)
+    requires = 'nvim-tree/nvim-web-devicons'
+}
 end)

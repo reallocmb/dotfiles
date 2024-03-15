@@ -104,11 +104,6 @@ _G.packer_plugins = {
     path = "/home/mb/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
   },
-  ["lualine.nvim"] = {
-    loaded = true,
-    path = "/home/mb/.local/share/nvim/site/pack/packer/start/lualine.nvim",
-    url = "https://github.com/nvim-lualine/lualine.nvim"
-  },
   molokai = {
     loaded = true,
     path = "/home/mb/.local/share/nvim/site/pack/packer/start/molokai",
@@ -144,15 +139,19 @@ _G.packer_plugins = {
     path = "/home/mb/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
+  ["nvim-minimaline"] = {
+    loaded = true,
+    path = "/home/mb/.local/share/nvim/site/pack/packer/start/nvim-minimaline",
+    url = "https://github.com/javiorfo/nvim-minimaline"
+  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/home/mb/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
   ["nvim-web-devicons"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/mb/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons",
+    loaded = true,
+    path = "/home/mb/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/nvim-tree/nvim-web-devicons"
   },
   ["packer.nvim"] = {

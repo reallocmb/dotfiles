@@ -195,44 +195,16 @@ vim.g.vimtex_compiler_method = 'pdflatex'
 -- following line. The default is usually fine and is the symbol "\".
 vim.g.maplocalleader = ","
 
--- statusline
-require('lualine').setup {
-  options = {
-    icons_enabled = false,
-    theme = 'palenight',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {
-      statusline = {},
-      winbar = {},
-    },
-    ignore_focus = {},
-    always_divide_middle = true,
-    globalstatus = false,
-    refresh = {
-      statusline = 1000,
-      tabline = 1000,
-      winbar = 1000,
-    }
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  winbar = {},
-  inactive_winbar = {},
-  extensions = {}
+require'minimaline'.setup {
+    -- Disable minimaline in the following filetypes (default is empty table)
+    disabled_filetypes = { "NvimTree*" },
+
+    -- Enable or disable colors on LSP diagnostics (default is false)
+    lsp_colors_enabled = true,
+
+    -- Set minimaline colors
+    -- Use 256 Xterm colors
+    -- foreground is "fg", background is "bg" and additionally "gui" could contain "bold", "italic" or combination "bold,italic"
+    -- Set only one option is possible (only fg or only bg, etc)
+    style = { fg = 15, bg = 0 }
 }
