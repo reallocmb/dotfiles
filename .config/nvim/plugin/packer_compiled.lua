@@ -104,6 +104,11 @@ _G.packer_plugins = {
     path = "/home/mb/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
   },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/home/mb/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
   molokai = {
     loaded = true,
     path = "/home/mb/.local/share/nvim/site/pack/packer/start/molokai",
@@ -188,11 +193,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mb/.local/share/nvim/site/pack/packer/start/vimtex",
     url = "https://github.com/lervag/vimtex"
-  },
-  ["yasl.nvim"] = {
-    loaded = true,
-    path = "/home/mb/.local/share/nvim/site/pack/packer/start/yasl.nvim",
-    url = "https://github.com/brianaung/yasl.nvim"
   }
 }
 

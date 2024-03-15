@@ -195,36 +195,43 @@ vim.g.vimtex_compiler_method = 'pdflatex'
 -- following line. The default is usually fine and is the symbol "\".
 vim.g.maplocalleader = ","
 
-require("yasl").setup({
-    -- See :h laststatus
-    laststatus = 3,
-
-    -- true if nvim-web-devicons is installed, otherwise false
-    enable_icons = true, 
-
-    --[[
-    Accepts provided component name (or)
-    any string vim can use for statusline value. See :h statusline
-
-    Default layout:
-    +----------------------------------------------------------------------------+
-    | mode | name branch diff |             | diagnostics | ft location progress |
-    +----------------------------------------------------------------------------+
-    ]]--
-    components = {
-        "mode",
-        " ",
-        "%<%t%h%m%r%w", -- filename
-        " ",
-        "branch",
-        " ",
-        "gitdiff",
-        "%=",
-        "diagnostics",
-        " ",
-        "filetype",
-        " ",
-        "[%-8.(%l, %c%V%) %P]", -- location, and progress
-        " ",
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'gruvbox_dark',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
     }
-})
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}

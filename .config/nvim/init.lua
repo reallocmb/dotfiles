@@ -97,5 +97,5 @@ return require('packer').startup(function(use)
     use('rcarriga/nvim-dap-ui')
 
     -- statusline
-    use('brianaung/yasl.nvim')
+    use('nvim-lualine/lualine.nvim')
 end)
