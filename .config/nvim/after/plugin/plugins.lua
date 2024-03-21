@@ -1,5 +1,5 @@
+-- vim.cmd.colorscheme("test")
 vim.cmd.colorscheme("4coder")
-vim.cmd.colorscheme("test")
 -- vim.cmd('set background=dark')
 -- vim.cmd.colorscheme("rose-pine")
 
