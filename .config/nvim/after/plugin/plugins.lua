@@ -1,7 +1,7 @@
 -- vim.cmd.colorscheme("test")
-vim.cmd.colorscheme("4coder")
 -- vim.cmd('set background=dark')
 -- vim.cmd.colorscheme("rose-pine")
+vim.cmd.colorscheme('alduin')
 
 -- configure Treesitter
 require('nvim-treesitter.configs').setup {
