@@ -1,7 +1,9 @@
 -- vim.cmd.colorscheme("test")
 -- vim.cmd('set background=dark')
 -- vim.cmd.colorscheme("rose-pine")
-vim.cmd.colorscheme('alduin')
+-- vim.cmd.colorscheme('alduin')
+--vim.cmd.colorscheme("4coder")
+vim.cmd.colorscheme("light")
 
 -- configure Treesitter
 require('nvim-treesitter.configs').setup {
@@ -201,7 +203,8 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
+    -- lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_b = {'branch', 'diff'},
     lualine_c = {'filename'},
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
