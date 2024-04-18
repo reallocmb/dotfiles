@@ -1,6 +1,7 @@
 hi clear Normal
 set bg&
 hi clear
+let g:colors_name = 'four'
 
 hi Normal guifg=#90b080 guibg=#181818
 hi NonText guifg=#90b080

@@ -1,8 +1,8 @@
 vim.opt.langmap = "snrthjkl;hjklsnrt"
 
+-- options set
 vim.opt.cinoptions = "cino=(0t0"
 
-vim.opt.guicursor = ""
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.tabstop = 4
@@ -12,92 +12,167 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 vim.opt.wrap = false
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = os.getenv("HOME") .. "/.nvim/undodir"
 vim.opt.undofile = true
 
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
+vim.opt.hlsearch = false
+--vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
--- vim.opt.signcolumn = "no"
-vim.opt.updatetime = 50
+vim.opt.signcolumn = "no"
 
--- highlight number
 vim.api.nvim_command('set cursorline')
 vim.api.nvim_command('set cursorlineopt=number')
 
+-- remaps
 vim.g.mapleader = ' '
 
--- my remaps
 vim.keymap.set('n', '<leader>h', ':wincmd h<cr>')
 vim.keymap.set('n', '<leader>j', ':wincmd j<cr>')
 vim.keymap.set('n', '<leader>k', ':wincmd k<cr>')
 vim.keymap.set('n', '<leader>l', ':wincmd l<cr>')
 
-vim.keymap.set('n', '<leader>i', ':wincmd s<cr>')
-vim.keymap.set('n', '<leader>a', ':wincmd v<cr>')
+vim.keymap.set('n', '<c-s>', ':wincmd s<cr>')
+vim.keymap.set('n', '<c-h>', ':wincmd v<cr>')
+
+vim.keymap.set('n', '<leader>c', ':hid<cr>')
 vim.keymap.set('n', '<leader>c', ':hid<cr>')
 
---vim.keymap.set('n', 'J', 'mzJ`z')
 vim.keymap.set('n', 'ä', 'nzzzv');
 vim.keymap.set('n', 'ö', 'Nzzzv');
+
+vim.keymap.set('n', '<c-d>', "<c-d>zz");
+vim.keymap.set('n', '<c-u>', "<c-u>zz");
+
+-- greatest remap ever
+vim.keymap.set("x", "<leader>p", [["_dP]])
+
+-- next greatest remap ever : asbjornHaland
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- terminal
 vim.keymap.set("n", "<leader>o", ":terminal<cr>")
 vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", { noremap = false })
 
--- Plugins width PACKER
-vim.cmd [[packadd packer.nvim]]
+-- build
+vim.keymap.set('n', '<leader>b', ':terminal sh build.sh ', {})
+vim.keymap.set('n', '<leader>m', ':!sh build.sh<cr>', {})
 
-return require('packer').startup(function(use)
-	use('wbthomason/packer.nvim')
+-- package manager lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-	use('nvim-treesitter/playground')
-
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.2',
-        -- or                            , branch = '0.1.x',
-        requires = { {'nvim-lua/plenary.nvim'} }
-    }
-
-    use "nvim-lua/plenary.nvim"
-    use {
+require("lazy").setup({
+    --"nvim-treesitter/nvim-treesitter",
+    {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
-        requires = {{"nvim-lua/plenary.nvim"}}
+        dependencies = { "nvim-lua/plenary.nvim" }
+    },
+    "neovim/nvim-lspconfig",
+    {
+        "nvim-telescope/telescope.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" }
+    },
+
+    "nvim-lualine/lualine.nvim",
+
+    --colorschemes
+    "folke/tokyonight.nvim",
+    { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...}
+
+})
+
+vim.cmd.colorscheme("four")
+
+-- Plugin: harpoon
+local harpoon = require("harpoon")
+
+harpoon:setup()
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>e", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+vim.keymap.set("n", "<C-b>", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<C-m>", function() harpoon:list():next() end)
+
+vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<leader>5", function() harpoon:list():select(5) end)
+vim.keymap.set("n", "<leader>6", function() harpoon:list():select(6) end)
+vim.keymap.set("n", "<leader>7", function() harpoon:list():select(7) end)
+vim.keymap.set("n", "<leader>8", function() harpoon:list():select(8) end)
+vim.keymap.set("n", "<leader>9", function() harpoon:list():select(9) end)
+
+-- Plugin: nvim-lspconfig
+local lspconfig = require("lspconfig")
+vim.diagnostic.disable()
+
+lspconfig.clangd.setup{};
+
+vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+
+-- Plugin: nvim-telescope
+local builtin = require('telescope.builtin')
+
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fs', builtin.help_tags, {})
+
+--Plugin: lualine
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'gruvbox_dark',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
     }
-
-    use('neovim/nvim-lspconfig')
-    use('hrsh7th/nvim-cmp')
-    use('hrsh7th/cmp-nvim-lsp')
-    use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-    use 'L3MON4D3/LuaSnip' -- Snippets plugin
-
-    -- use('mbbill/undotree')
-
-    use("AlessandroYorba/Alduin");
-    use('altercation/vim-colors-solarized')
-    use('rose-pine/neovim')
-    use('ellisonleao/gruvbox.nvim')
-    use('tomasr/molokai')
-    use('adigitoleo/vim-mellow')
-    use('NLKNguyen/papercolor-theme')
-
-    -- latex
-    use('lervag/vimtex')
-    use('rhysd/vim-clang-format')
-
-    --debugging
-    use('mfussenegger/nvim-dap')
-    use('folke/neodev.nvim')
-    use('rcarriga/nvim-dap-ui')
-
-    -- statusline
-    use('nvim-lualine/lualine.nvim')
-
-
-end)
+  },
+  sections = {
+    lualine_a = {'mode'},
+    -- lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_b = {'branch', 'diff'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
