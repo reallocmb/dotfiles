@@ -28,3 +28,5 @@ hi Visual guibg=#494949
 
 hi MatchParen guifg=#aa22dd guibg=NONE
 
+hi cBlock guifg=#d08f20 gui=BOLD
+
