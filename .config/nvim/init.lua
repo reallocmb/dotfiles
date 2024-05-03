@@ -97,6 +97,8 @@ require("lazy").setup({
     "folke/tokyonight.nvim",
     { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
     "rose-pine/neovim",
+
+    "sakibmoon/vim-colors-notepad-plus-plus"
 })
 
 vim.cmd.colorscheme("four")
