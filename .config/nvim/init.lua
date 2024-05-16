@@ -1,3 +1,8 @@
+
+-- vim.cmd.colorscheme("empty")
+-- vim.cmd.colorscheme("rose-pine")
+vim.cmd.colorscheme("four")
+
 vim.opt.langmap = "snrthjkl;hjklsnrt"
 
 -- options set
@@ -37,7 +42,6 @@ vim.keymap.set('n', '<c-s>', ':wincmd s<cr>')
 vim.keymap.set('n', '<c-h>', ':wincmd v<cr>')
 
 vim.keymap.set('n', '<leader>c', ':hid<cr>')
-vim.keymap.set('n', '<leader>c', ':hid<cr>')
 
 vim.keymap.set('n', 'ä', 'nzzzv');
 vim.keymap.set('n', 'ö', 'Nzzzv');
@@ -75,7 +79,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    --"nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter",
     {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
@@ -93,16 +97,13 @@ require("lazy").setup({
 
     "nvim-lualine/lualine.nvim",
 
+    --Obsidian
     --colorschemes
+    "Mofiqul/vscode.nvim",
     "folke/tokyonight.nvim",
     { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
     "rose-pine/neovim",
-
-    "sakibmoon/vim-colors-notepad-plus-plus"
 })
-
-vim.cmd.colorscheme("four")
--- vim.cmd.colorscheme("rose-pine")
 
 -- Plugin: harpoon
 local harpoon = require("harpoon")
@@ -130,6 +131,8 @@ vim.diagnostic.disable()
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+vim.keymap.set("n", "<leader>kj", vim.lsp.buf.rename)
+vim.keymap.set("n", "<leader>kf", vim.lsp.buf.references)
 
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -209,44 +212,44 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fs', builtin.help_tags, {})
 
 --Plugin: lualine
-require('lualine').setup {
-  options = {
-    icons_enabled = true,
-    theme = 'gruvbox_dark',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {
-      statusline = {},
-      winbar = {},
-    },
-    ignore_focus = {},
-    always_divide_middle = true,
-    globalstatus = false,
-    refresh = {
-      statusline = 1000,
-      tabline = 1000,
-      winbar = 1000,
-    }
-  },
-  sections = {
-    lualine_a = {'mode'},
-    -- lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_b = {'branch', 'diff'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  winbar = {},
-  inactive_winbar = {},
-  extensions = {}
-}
+--require('lualine').setup {
+--  options = {
+--    icons_enabled = true,
+--    theme = 'gruvbox_dark',
+--    component_separators = { left = '', right = ''},
+--    section_separators = { left = '', right = ''},
+--    disabled_filetypes = {
+--      statusline = {},
+--      winbar = {},
+--    },
+--    ignore_focus = {},
+--    always_divide_middle = true,
+--    globalstatus = false,
+--    refresh = {
+--      statusline = 1000,
+--      tabline = 1000,
+--      winbar = 1000,
+--    }
+--  },
+--  sections = {
+--    lualine_a = {'mode'},
+--    -- lualine_b = {'branch', 'diff', 'diagnostics'},
+--    lualine_b = {'branch', 'diff'},
+--    lualine_c = {'filename'},
+--    lualine_x = {'encoding', 'fileformat', 'filetype'},
+--    lualine_y = {'progress'},
+--    lualine_z = {'location'}
+--  },
+--  inactive_sections = {
+--    lualine_a = {},
+--    lualine_b = {},
+--    lualine_c = {'filename'},
+--    lualine_x = {'location'},
+--    lualine_y = {},
+--    lualine_z = {}
+--  },
+--  tabline = {},
+--  winbar = {},
+--  inactive_winbar = {},
+--  extensions = {}
+--}
