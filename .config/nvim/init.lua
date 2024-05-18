@@ -61,6 +61,9 @@ vim.keymap.set("n", "<leader>o", ":terminal<cr>")
 vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", { noremap = false })
 
 -- build
+--vim.keymap.set('n', '<leader>b', ':terminal make ', {})
+--vim.keymap.set('n', '<leader>m', ':!make<cr>', {})
+
 vim.keymap.set('n', '<leader>b', ':terminal sh build.sh ', {})
 vim.keymap.set('n', '<leader>m', ':!sh build.sh<cr>', {})
 
@@ -103,6 +106,8 @@ require("lazy").setup({
     "folke/tokyonight.nvim",
     { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
     "rose-pine/neovim",
+
+    "ziglang/zig.vim"
 })
 
 -- Plugin: harpoon
