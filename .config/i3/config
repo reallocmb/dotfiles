@@ -227,7 +227,7 @@ bindsym $mod+c mode "resize"
 bar {
         #status_command i3status -c ~/.config/i3/i3status.conf
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        position top
+        position bottom
         colors {
             background #181818
         }

@@ -1,8 +1,8 @@
 
 -- vim.cmd.colorscheme("empty")
 -- vim.cmd.colorscheme("rose-pine")
--- vim.cmd.colorscheme("four")
-vim.cmd.colorscheme("habamax")
+-- vim.cmd.colorscheme("habamax")
+vim.cmd.colorscheme("four")
 
 vim.opt.langmap = "snrthjkl;hjklsnrt"
 
