@@ -39,8 +39,8 @@ vim.keymap.set('n', '<leader>j', ':wincmd j<cr>')
 vim.keymap.set('n', '<leader>k', ':wincmd k<cr>')
 vim.keymap.set('n', '<leader>l', ':wincmd l<cr>')
 
-vim.keymap.set('n', '<c-s>', ':wincmd s<cr>')
-vim.keymap.set('n', '<c-h>', ':wincmd v<cr>')
+vim.keymap.set('n', '<c-h>', ':wincmd s<cr>')
+vim.keymap.set('n', '<c-s>', ':wincmd v<cr>')
 
 vim.keymap.set('n', '<leader>c', ':hid<cr>')
 
