@@ -2,6 +2,8 @@ hi clear Normal
 set bg&
 hi clear
 
+hi Normal guifg=#aabbee guibg=#0c0c0c
+
 hi Constant guifg=#aabbee gui=none
 hi @string.c guifg=#aabbee gui=none
 hi @number.c guifg=#2288aa gui=none
@@ -26,6 +28,7 @@ hi @variable.c guifg=#aa8888 gui=NONE
 hi @variable.parameter.c guifg=#aa8888 gui=NONE
 hi @lsp.type.parameter.c guifg=#aa8888 gui=NONE
 hi @lsp.type.function.c guifg=#aaaaaa gui=none
+hi @constant guifg=#aaccaa
 
 hi @variable.cpp guifg=#aa8888 gui=NONE
 hi @variable.parameter.cpp guifg=#aa8888 gui=NONE

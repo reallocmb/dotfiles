@@ -24,6 +24,7 @@ hi Constant guifg=#a08563 guibg=#0c0c0c gui=NONE
 "Keyword
 hi Statement guifg=#ac7b0b guibg=#0c0c0c gui=NONE
 hi Special guifg=#ac7b0b guibg=#0c0c0c gui=NONE
+hi @lsp.typemod.type.fileScope.c guifg=#ac7b0b guibg=#0c0c0c gui=NONE
 "hi Type guifg=#ac7b0b guibg=#0c0c0c
 "hi @type.c guifg=#ac7b0b guibg=#0c0c0c
 

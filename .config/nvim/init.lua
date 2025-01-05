@@ -84,8 +84,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     "nvim-treesitter/nvim-treesitter",
+        'nvim-treesitter/playground',
     {
         "ThePrimeagen/harpoon",
+
         branch = "harpoon2",
         dependencies = { "nvim-lua/plenary.nvim" }
     },
@@ -121,7 +123,8 @@ require("lazy").setup({
         end
     },
 
-
+    "mfussenegger/nvim-dap",
+    "machakann/vim-highlightedyank",
 })
 
 require'nvim-treesitter.configs'.setup {
@@ -315,3 +318,5 @@ vim.keymap.set('n', '<leader>fs', builtin.help_tags, {})
 --  inactive_winbar = {},
 --  extensions = {}
 --}
+
+vim.hl = vim.highlight
