@@ -15,7 +15,7 @@ hi @fuction.call.cpp guifg=#a08563 guibg=#0c0c0c
 hi @lsp.type.function.c guifg=#a08563 guibg=#0c0c0c gui=NONE
 hi @lsp.type.function.cpp guifg=#a08563 guibg=#0c0c0c gui=NONE
 hi @variable guifg=#a08563 guibg=#0c0c0c gui=NONE
-hi Type guifg=#a08563 guibg=#0c0c0c gui=NONE
+"hi Type guifg=#a08563 guibg=#0c0c0c gui=NONE
 hi Identifier guifg=#a08563 guibg=#0c0c0c gui=NONE
 hi Operator guifg=#a08563 guibg=#0c0c0c gui=NONE
 hi Delimiter guifg=#a08563 guibg=#0c0c0c gui=NONE
@@ -25,7 +25,7 @@ hi Constant guifg=#a08563 guibg=#0c0c0c gui=NONE
 hi Statement guifg=#ac7b0b guibg=#0c0c0c gui=NONE
 hi Special guifg=#ac7b0b guibg=#0c0c0c gui=NONE
 hi @lsp.typemod.type.fileScope.c guifg=#ac7b0b guibg=#0c0c0c gui=NONE
-"hi Type guifg=#ac7b0b guibg=#0c0c0c
+hi Type guifg=#ac7b0b guibg=#0c0c0c
 "hi @type.c guifg=#ac7b0b guibg=#0c0c0c
 
 
