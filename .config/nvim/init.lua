@@ -1,8 +1,5 @@
--- vim.cmd.colorscheme("empty")
--- vim.cmd.colorscheme("rose-pine")
--- vim.cmd.colorscheme("habamax")
--- vim.cmd.colorscheme("four")
-vim.cmd.colorscheme("369")
+-- vim.cmd.colorscheme("369")
+vim.cmd.colorscheme("369_")
 
 vim.opt.langmap = "snrthjkl;hjklsnrt"
 
@@ -18,7 +15,6 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 vim.opt.wrap = false
-vim.opt.undodir = os.getenv("HOME") .. "/.nvim/undodir"
 vim.opt.undofile = true
 
 vim.opt.hlsearch = true
@@ -47,6 +43,8 @@ vim.keymap.set('n', '<leader>c', ':hid<cr>')
 vim.keymap.set('n', 'ä', 'nzzzv');
 vim.keymap.set('n', 'ö', 'Nzzzv');
 
+vim.keymap.set({'n', 'v' }, 'L', 'T');
+
 vim.keymap.set('n', '<c-d>', "<c-d>zz");
 vim.keymap.set('n', '<c-u>', "<c-u>zz");
 
@@ -65,26 +63,30 @@ vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", { noremap = false })
 --vim.keymap.set('n', '<leader>b', ':terminal make ', {})
 --vim.keymap.set('n', '<leader>m', ':!make<cr>', {})
 
-vim.keymap.set('n', '<leader>b', ':terminal sh build.sh ', {})
-vim.keymap.set('n', '<leader>m', ':!sh build.sh<cr>', {})
+--vim.keymap.set('n', '<leader>b', ':terminal sh build.sh ', {})
+--vim.keymap.set('n', '<leader>m', ':!sh build.sh<cr>', {})
+
+vim.keymap.set('n', '<leader>b', ':terminal build.bat ', {})
+vim.keymap.set('n', '<leader>m', ':!build.bat<cr>', {})
 
 -- package manager lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    "nvim-treesitter/nvim-treesitter",
-        'nvim-treesitter/playground',
     {
         "ThePrimeagen/harpoon",
 
@@ -95,79 +97,21 @@ require("lazy").setup({
         "nvim-telescope/telescope.nvim",
         dependencies = { "nvim-lua/plenary.nvim" }
     },
+
     "neovim/nvim-lspconfig",
-    "hrsh7th/nvim-cmp",
-    "hrsh7th/cmp-nvim-lsp",
-    "saadparwaiz1/cmp_luasnip",
-    "L3MON4D3/LuaSnip",
 
-    "nvim-lualine/lualine.nvim",
-
-    --Obsidian
-    --colorschemes
-    "Mofiqul/vscode.nvim",
-    -- lazy
-    "askfiy/visual_studio_code",
-    "folke/tokyonight.nvim",
-    { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
-    "rose-pine/neovim",
-
-    "ziglang/zig.vim",
-    {
-        "lervag/vimtex",
-        lazy = false,     -- we don't want to lazy load VimTeX
-        -- tag = "v2.15", -- uncomment to pin to a specific release
-        init = function()
-            -- VimTeX configuration goes here
-            vim.g.vimtex_view_method = 'zathura'
-        end
-    },
-
-    "mfussenegger/nvim-dap",
-    "machakann/vim-highlightedyank",
+    "szw/vim-maximizer",
 })
 
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "rust", "zig" },
+-- Plugin: nvim-lspconfig
+require'lspconfig'.clangd.setup{}
+vim.diagnostic.disable()
 
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
+vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+vim.keymap.set("n", "<leader>de", vim.lsp.buf.rename)
+vim.keymap.set("n", "<leader>da", vim.lsp.buf.references)
 
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = true,
-
-  -- List of parsers to ignore installing (or "all")
-  ignore_install = { "javascript" },
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-  highlight = {
-    enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    disable = { "c", "rust" },
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    disable = function(lang, buf)
-        local max_filesize = 100 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-            return true
-        end
-    end,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
 
 -- Plugin: harpoon
 local harpoon = require("harpoon")
@@ -189,84 +133,6 @@ vim.keymap.set("n", "<leader>7", function() harpoon:list():select(7) end)
 vim.keymap.set("n", "<leader>8", function() harpoon:list():select(8) end)
 vim.keymap.set("n", "<leader>9", function() harpoon:list():select(9) end)
 
--- Plugin: nvim-lspconfig
-local lspconfig = require("lspconfig")
-vim.diagnostic.disable()
-
-vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
-vim.keymap.set("n", "<leader>de", vim.lsp.buf.rename)
-vim.keymap.set("n", "<leader>da", vim.lsp.buf.references)
-
--- Add additional capabilities supported by nvim-cmp
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-local lspconfig = require('lspconfig')
-
--- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = {
-    'clangd',
-    'gopls',
-    'zls'
-}
-
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    -- on_attach = my_custom_on_attach,
-    capabilities = capabilities,
-  }
-end
-
--- luasnip setup
-local luasnip = require 'luasnip'
-
--- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  window = {
-      completion = cmp.config.window.bordered(),
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
-    ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
-    -- C-b (back) C-f (forward) for snippet placeholder navigation.
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  }),
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-  completion = {
-      autocomplete = false
-  }
-}
 
 -- Plugin: nvim-telescope
 local builtin = require('telescope.builtin')
@@ -276,47 +142,14 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fs', builtin.help_tags, {})
 
---Plugin: lualine
---require('lualine').setup {
---  options = {
---    icons_enabled = true,
---    theme = 'gruvbox_dark',
---    component_separators = { left = '', right = ''},
---    section_separators = { left = '', right = ''},
---    disabled_filetypes = {
---      statusline = {},
---      winbar = {},
---    },
---    ignore_focus = {},
---    always_divide_middle = true,
---    globalstatus = false,
---    refresh = {
---      statusline = 1000,
---      tabline = 1000,
---      winbar = 1000,
---    }
---  },
---  sections = {
---    lualine_a = {'mode'},
---    -- lualine_b = {'branch', 'diff', 'diagnostics'},
---    lualine_b = {'branch', 'diff'},
---    lualine_c = {'filename'},
---    lualine_x = {'encoding', 'fileformat', 'filetype'},
---    lualine_y = {'progress'},
---    lualine_z = {'location'}
---  },
---  inactive_sections = {
---    lualine_a = {},
---    lualine_b = {},
---    lualine_c = {'filename'},
---    lualine_x = {'location'},
---    lualine_y = {},
---    lualine_z = {}
---  },
---  tabline = {},
---  winbar = {},
---  inactive_winbar = {},
---  extensions = {}
---}
+
+
+
+vim.keymap.set('n', '<leader>s', ":MaximizerToggle<cr>");
+
+
+
+
+
 
 vim.hl = vim.highlight
