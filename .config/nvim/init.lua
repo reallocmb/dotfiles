@@ -99,13 +99,54 @@ require("lazy").setup({
     },
 
     "neovim/nvim-lspconfig",
+    "hrsh7th/nvim-cmp",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-vsnip",
+    "hrsh7th/vim-vsnip",
+
+    --"hrsh7th/cmp-buffer",
+    --"hrsh7th/cmp-path",
+    --"hrsh7th/cmp-cmdline",
+
+
 
     "szw/vim-maximizer",
+    "navarasu/onedark.nvim"
 })
 
 -- Plugin: nvim-lspconfig
-require'lspconfig'.clangd.setup{}
-vim.diagnostic.disable()
+local cmp = require("cmp")
+
+cmp.setup({
+    completion = {
+        autocomplete = false
+    },
+    snippet = {
+        expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+        end,
+    },
+    mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' },
+  }),
+})
+
+-- LSP Setup with capabilities from cmp
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+require('lspconfig').clangd.setup({
+  capabilities = capabilities,
+})
+--vim.diagnostic.disable()
+vim.diagnostic.enable(false)
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
@@ -142,13 +183,7 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fs', builtin.help_tags, {})
 
-
-
-
 vim.keymap.set('n', '<leader>s', ":MaximizerToggle<cr>");
-
-
-
 
 
 
