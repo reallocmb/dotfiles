@@ -1,0 +1,10 @@
+[terminal.shell]
+program = "cmd.exe"
+args = ["/k", "cd %USERPROFILE%"]
+
+[font]
+normal = { family = "Hack Nerd Font", style = "Regular" }
+
+
+[window]
+

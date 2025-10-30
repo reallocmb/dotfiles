@@ -12,10 +12,32 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
+vim.opt.wrap = false
+
 vim.opt.smartindent = true
 
 -- Leader-Key
 vim.g.mapleader = ' '
+
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Gehe zur Definition' })
+vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'Gehe zur Deklaration' })
+vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = 'Gehe zur Implementierung' })
+vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Zeige Referenzen' })
+vim.keymap.set('n', '<leader>i', vim.diagnostic.open_float)
+
+
+vim.keymap.set('n', '<c-s>', ':wincmd s<cr>')
+vim.keymap.set('n', '<c-h>', ':wincmd v<cr>')
+
+vim.keymap.set('n', '<leader>h', ':wincmd h<cr>')
+vim.keymap.set('n', '<leader>j', ':wincmd j<cr>')
+vim.keymap.set('n', '<leader>k', ':wincmd k<cr>')
+vim.keymap.set('n', '<leader>l', ':wincmd l<cr>')
+
+vim.keymap.set('n', '<leader>c', ':close<cr>')
+
+vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<cr>')
+
 
 -- OS-Check
 local is_windows = (vim.fn.has("win32") == 1)
@@ -50,6 +72,8 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
+        { 'nvim-tree/nvim-web-devicons', opts = {} },
+
         'neovim/nvim-lspconfig',
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
@@ -63,7 +87,8 @@ require("lazy").setup({
             'mason-org/mason.nvim',
             opts = {}
         },
-        "ellisonleao/gruvbox.nvim"
+        "ellisonleao/gruvbox.nvim",
+        "nvim-tree/nvim-tree.lua"
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
@@ -111,5 +136,9 @@ cmp.setup({
   })
 })
 
-vim.cmd("colorscheme gruvbox")
-vim.cmd("colorscheme wildcharm")
+require("nvim-tree").setup()
+
+-- vim.cmd("colorscheme wildcharm")
+vim.cmd("colorscheme 369_")
+
+vim.diagnostic.enable(false)
