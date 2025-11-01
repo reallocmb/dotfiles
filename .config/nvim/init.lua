@@ -44,10 +44,11 @@ local is_windows = (vim.fn.has("win32") == 1)
 
 -- Build-Shortcuts (deine Mappings)
 if is_windows then
-    vim.keymap.set('n', '<leader>b', ':terminal build.bat & pause<cr>', { desc = 'Build (Windows Terminal)' })
+    --vim.keymap.set('n', '<leader>b', ':terminal build.bat', { desc = 'Build (Windows Terminal)' })
+    vim.keymap.set('n', '<leader>b', ':Build<cr>', { desc = 'Build (Windows Terminal)' })
     vim.keymap.set('n', '<leader>m', ':!build.bat<cr>', { desc = 'Build (Windows Silent)' })
 else
-    vim.keymap.set('n', '<leader>b', ':terminal sh build.sh; read<cr>', { desc = 'Build (Unix Terminal)' })
+    vim.keymap.set('n', '<leader>b', ':terminal sh build.sh', { desc = 'Build (Unix Terminal)' })
     vim.keymap.set('n', '<leader>m', ':!sh build.sh<cr>', { desc = 'Build (Unix Silent)' })
 end
 
@@ -72,6 +73,9 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
+        'nvim-lua/plenary.nvim',
+        'ThePrimeagen/harpoon',
+
         { 'nvim-tree/nvim-web-devicons', opts = {} },
 
         'neovim/nvim-lspconfig',
@@ -142,3 +146,21 @@ require("nvim-tree").setup()
 vim.cmd("colorscheme 369_")
 
 vim.diagnostic.enable(false)
+
+
+-- harpoon
+-- harpoon
+vim.keymap.set('n', '<leader>g', function() require("harpoon.ui").toggle_quick_menu() end)
+vim.keymap.set('n', '<leader>a', function() require("harpoon.mark").add_file() end)
+vim.keymap.set('n', '<leader>1', function() require("harpoon.ui").nav_file(1) end)
+vim.keymap.set('n', '<leader>2', function() require("harpoon.ui").nav_file(2) end)
+vim.keymap.set('n', '<leader>3', function() require("harpoon.ui").nav_file(3) end)
+vim.keymap.set('n', '<leader>4', function() require("harpoon.ui").nav_file(4) end)
+
+vim.cmd([[
+  command! Build execute 'make' | copen
+]])
+
+vim.o.makeprg = 'build.bat'
+vim.o.errorformat = '%f(%l): %m'
+
