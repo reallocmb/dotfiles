@@ -3,6 +3,7 @@
 -- =========================
 vim.opt.langmap = "snrthjkl;hjklsnrt"
 vim.opt.cinoptions = "(0,t0"
+vim.opt.cinoptions:append(",:0,l1")
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
