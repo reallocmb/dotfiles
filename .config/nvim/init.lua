@@ -42,13 +42,28 @@ vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<cr>')
 -- OS-Check
 local is_windows = (vim.fn.has("win32") == 1)
 
+
 -- Build-Shortcuts (deine Mappings)
 if is_windows then
+    vim.cmd([[
+    command! Build execute 'make' | copen
+    ]])
+
+    vim.o.makeprg = 'build.bat'
+    vim.o.errorformat = '%f(%l): %m'
+
     --vim.keymap.set('n', '<leader>b', ':terminal build.bat', { desc = 'Build (Windows Terminal)' })
     vim.keymap.set('n', '<leader>b', ':Build<cr>', { desc = 'Build (Windows Terminal)' })
     vim.keymap.set('n', '<leader>m', ':!build.bat<cr>', { desc = 'Build (Windows Silent)' })
 else
-    vim.keymap.set('n', '<leader>b', ':terminal sh build.sh', { desc = 'Build (Unix Terminal)' })
+    vim.cmd([[
+    command! Build execute 'make' | copen
+    ]])
+
+    vim.o.makeprg = 'sh build.sh'
+    vim.o.errorformat = '%A%f:%l:%c: %m,%C%.%#,%Z'
+
+    vim.keymap.set('n', '<leader>b', ':Build<cr>', { desc = 'Build (Unix Terminal)' })
     vim.keymap.set('n', '<leader>m', ':!sh build.sh<cr>', { desc = 'Build (Unix Silent)' })
 end
 
@@ -157,10 +172,4 @@ vim.keymap.set('n', '<leader>2', function() require("harpoon.ui").nav_file(2) en
 vim.keymap.set('n', '<leader>3', function() require("harpoon.ui").nav_file(3) end)
 vim.keymap.set('n', '<leader>4', function() require("harpoon.ui").nav_file(4) end)
 
-vim.cmd([[
-  command! Build execute 'make' | copen
-]])
-
-vim.o.makeprg = 'build.bat'
-vim.o.errorformat = '%f(%l): %m'
 
