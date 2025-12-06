@@ -14,7 +14,7 @@ config.font_size = 11.0
 config.hide_tab_bar_if_only_one_tab = true
 
 -- Standard-Shell (PowerShell)
-config.default_prog = { "cmd.exe" }
+-- config.default_prog = { "cmd.exe" }
 
 config.window_background_opacity = 1
 
