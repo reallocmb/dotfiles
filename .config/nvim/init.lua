@@ -2,8 +2,7 @@
 --  Grundeinstellungen
 -- =========================
 vim.opt.langmap = "snrthjkl;hjklsnrt"
-vim.opt.cinoptions = "(0,t0"
-vim.opt.cinoptions:append(",:0,l1")
+vim.opt.cinoptions = "(0t0"
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -12,10 +11,14 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+vim.opt.scrolloff = 8
 
 vim.opt.wrap = false
 
 vim.opt.smartindent = true
+
+vim.api.nvim_command('set cursorline')
+vim.api.nvim_command('set cursorlineopt=number')
 
 -- Leader-Key
 vim.g.mapleader = ' '
@@ -107,8 +110,16 @@ require("lazy").setup({
             'mason-org/mason.nvim',
             opts = {}
         },
+        -- init.lua:
+        {
+            'nvim-telescope/telescope.nvim', tag = 'v0.2.0',
+            dependencies = { 'nvim-lua/plenary.nvim' }
+        },
+        "rebelot/kanagawa.nvim",
         "ellisonleao/gruvbox.nvim",
-        "nvim-tree/nvim-tree.lua"
+        "catppuccin/nvim",
+        "nvim-tree/nvim-tree.lua",
+        "martin-walls/halfdark.nvim"
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
@@ -137,6 +148,9 @@ cmp.setup({
             vim.fn["vsnip#anonymous"](args.body)
         end,
     },
+    completion = {
+        autocomplete = false,
+    },
     window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
@@ -163,7 +177,6 @@ vim.cmd("colorscheme 369_")
 
 vim.diagnostic.enable(false)
 
-
 -- harpoon
 -- harpoon
 vim.keymap.set('n', '<leader>g', function() require("harpoon.ui").toggle_quick_menu() end)
@@ -172,5 +185,13 @@ vim.keymap.set('n', '<leader>1', function() require("harpoon.ui").nav_file(1) en
 vim.keymap.set('n', '<leader>2', function() require("harpoon.ui").nav_file(2) end)
 vim.keymap.set('n', '<leader>3', function() require("harpoon.ui").nav_file(3) end)
 vim.keymap.set('n', '<leader>4', function() require("harpoon.ui").nav_file(4) end)
+
+-- telescope
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
 
 
